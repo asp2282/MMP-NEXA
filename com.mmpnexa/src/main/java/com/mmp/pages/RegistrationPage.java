@@ -7,29 +7,34 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+//import org.mmp.base.Base;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
 public class RegistrationPage {
-
-	    HashMap<String,String> hMap = new HashMap<String,String>();
-		Random rnd = new Random();
-		WebDriver driver;
-		
-		
-		public  HashMap<String, String> registerPatient() 
+	@Test
+	public  HashMap<String, String> registerPatient() 
 	{ 
+	     HashMap<String,String> hMap = new HashMap<String,String>();
+	     Random rnd = new Random();
+		 WebDriver driver;
+		// Base bs=new Base();
+		
+		//public  HashMap<String, String> registerPatient() 
+	//{ 
 	
-	 System.setProperty("webdriver.chrome.driver", "C:\\Users\\pathi\\workspace\\org.mmp\\org-Browsers\\chromedriver.exe");
+	System.setProperty("webdriver.chrome.driver", "C:\\Users\\pathi\\workspace\\org.mmp\\org-Browsers\\chromedriver.exe");
 	 driver = new ChromeDriver();
 	 driver.manage().window().maximize();
 	 driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	 driver.get("http://96.84.175.78/MMP-Release2-Integrated-Build.6.8.000/portal/registration.php");
-        
+       // bs.getRegisterUrl();
 	
 		WebElement stateTxtField = driver.findElement(By.id("state"));
 		stateTxtField.sendKeys("NC");
@@ -102,7 +107,7 @@ public class RegistrationPage {
 		hMap.put("email", emailTxtField.getAttribute("value"));
 		
 		WebElement usernameTxtField = driver.findElement(By.id("username"));
-		String UNameValue = "Auto_Testerasp" +  (char) (65+rnd.nextInt(26));
+		String UNameValue = "AutO_TesteR_asp!" +  (char) (65+rnd.nextInt(26));
 		usernameTxtField.sendKeys(UNameValue);
 		System.out.println("username: "+UNameValue);
 		hMap.put("username", usernameTxtField.getAttribute("value"));
@@ -143,11 +148,11 @@ public class RegistrationPage {
 		String successMsg = regalrt.getText();
 		System.out.println("regmsg:"+successMsg);
 		hMap.put("successMsg", successMsg);
-		//String expected = "Thank you for registering with MMP";
-		//Assert.assertEquals(successMsg.trim(),expected);
+		String expected = "Thank you for registering with MMP.";
+		Assert.assertEquals(successMsg.trim(),expected);
 		regalrt.accept();
 		
-		return hMap;
+		return hMap;    //to run this @test don't need return value,avoid it
 		
 		}
 }
